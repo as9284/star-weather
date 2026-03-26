@@ -26,7 +26,6 @@ export function LocationSearch({
       ? formatLocation(selectedLocation)
       : "";
 
-  // Debounce search query — only fire when user is actively editing
   useEffect(() => {
     if (!isEditing) return;
     const timer = setTimeout(() => setDebouncedQuery(inputValue), 1000);
@@ -37,7 +36,6 @@ export function LocationSearch({
     isEditing ? debouncedQuery : "",
   );
 
-  // Close dropdown and restore display value when clicking outside
   useEffect(() => {
     function handleClickOutside(evt: MouseEvent) {
       if (
@@ -71,6 +69,24 @@ export function LocationSearch({
   return (
     <div ref={wrapperRef} className="relative w-full">
       <div className="relative">
+        {/* Search icon */}
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-(--text-muted) pointer-events-none">
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-4.35-4.35"
+            />
+          </svg>
+        </div>
+
         <input
           type="text"
           value={displayValue}
@@ -81,27 +97,28 @@ export function LocationSearch({
             }
           }}
           placeholder="Search for a city..."
-          className="w-full px-5 py-4 text-lg neu-pressed text-(--text-main) placeholder-(--text-muted) focus:outline-none focus:ring-2 focus:ring-(--accent) transition-all border-none"
+          className="w-full pl-10 pr-10 py-3.5 text-sm neu-input"
         />
+
         {isSearching && isEditing && (
           <div className="absolute right-4 top-1/2 -translate-y-1/2">
-            <div className="w-5 h-5 border-2 border-(--text-muted) border-opacity-30 border-t-(--accent) rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-(--text-muted) border-opacity-30 border-t-(--accent) rounded-full animate-spin" />
           </div>
         )}
       </div>
 
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 mt-4 neu-panel overflow-hidden z-50 py-2">
+        <div className="absolute top-full left-0 right-0 mt-3 neu-dropdown z-50 py-1">
           {results!.map((location) => (
             <button
               key={location.id}
               onClick={() => handleSelect(location)}
-              className="w-full px-5 py-3 text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex flex-col focus:outline-none"
+              className="w-full px-5 py-3 text-left neu-dropdown-item flex flex-col focus:outline-none"
             >
-              <span className="font-semibold text-(--text-main)">
+              <span className="font-semibold text-(--text) text-sm">
                 {location.name}
               </span>
-              <span className="text-sm text-(--text-muted)">
+              <span className="text-xs text-(--text-muted) mt-0.5">
                 {location.admin1 && `${location.admin1}, `}
                 {location.country}
               </span>

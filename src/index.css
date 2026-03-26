@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* ── Design Tokens ─────────────────────────────────────────────────── */
 :root {
   font-family:
     "Inter",
@@ -9,97 +10,236 @@
     "Segoe UI",
     Roboto,
     sans-serif;
-  --bg-color: #e0e5ec;
-  --text-main: #2d3436;
-  --text-muted: #636e72;
-  --neumorph-light: #ffffff;
-  --neumorph-dark: #a3b1c6;
-  --accent: #5e81ac; /* soft blue/futuristic */
-  --accent-glow: rgba(94, 129, 172, 0.4);
+
+  /* Background – the canvas everything lives on */
+  --bg: #e0e5ec;
+  --bg-inset: #d5dae1;
+
+  /* Text */
+  --text: #2d3436;
+  --text-muted: #6b7b8d;
+
+  /* Neumorphic light / dark layers (outer glow and shadow) */
+  --neu-light: rgba(255, 255, 255, 0.85);
+  --neu-dark: rgba(163, 177, 198, 0.6);
+
+  /* Accent */
+  --accent: #5e81ac;
+  --accent-glow: rgba(94, 129, 172, 0.35);
+  --accent-soft: rgba(94, 129, 172, 0.08);
+
+  /* Neumorphism shadow presets */
+  --shadow-sm: 3px 3px 6px var(--neu-dark), -3px -3px 6px var(--neu-light);
+  --shadow-md: 6px 6px 12px var(--neu-dark), -6px -6px 12px var(--neu-light);
+  --shadow-lg: 10px 10px 20px var(--neu-dark), -10px -10px 20px var(--neu-light);
+  --shadow-xl: 14px 14px 28px var(--neu-dark), -14px -14px 28px var(--neu-light);
+
+  --inset-sm: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
+  --inset-md: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --inset-lg: inset 6px 6px 12px var(--neu-dark), inset -6px -6px 12px var(--neu-light);
 }
 
+/* ── System dark ───────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --bg-color: #24272e;
-    --text-main: #e4e6eb;
+    --bg: #2a2d35;
+    --bg-inset: #24272e;
+    --text: #e4e6eb;
     --text-muted: #8b92a5;
-    --neumorph-light: #2c2f38;
-    --neumorph-dark: #1c1f24;
+    --neu-light: rgba(60, 65, 76, 0.5);
+    --neu-dark: rgba(16, 18, 22, 0.7);
     --accent: #88c0d0;
-    --accent-glow: rgba(136, 192, 208, 0.4);
+    --accent-glow: rgba(136, 192, 208, 0.35);
+    --accent-soft: rgba(136, 192, 208, 0.08);
   }
 }
 
+/* ── Manual dark toggle ────────────────────────────────────────────── */
 :root.dark {
-  --bg-color: #24272e;
-  --text-main: #e4e6eb;
+  --bg: #2a2d35;
+  --bg-inset: #24272e;
+  --text: #e4e6eb;
   --text-muted: #8b92a5;
-  --neumorph-light: #2c2f38;
-  --neumorph-dark: #1c1f24;
+  --neu-light: rgba(60, 65, 76, 0.5);
+  --neu-dark: rgba(16, 18, 22, 0.7);
   --accent: #88c0d0;
-  --accent-glow: rgba(136, 192, 208, 0.4);
+  --accent-glow: rgba(136, 192, 208, 0.35);
+  --accent-soft: rgba(136, 192, 208, 0.08);
 }
 
+/* ── Base ──────────────────────────────────────────────────────────── */
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  transition: background-color 0.3s ease;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
-.neu-flat {
-  background: var(--bg-color);
-  box-shadow:
-    8px 8px 16px var(--neumorph-dark),
-    -8px -8px 16px var(--neumorph-light);
+/* ── Neumorphic Primitives ─────────────────────────────────────────── */
+
+/* Raised surface – cards, panels */
+.neu-raised {
+  background: var(--bg);
+  box-shadow: var(--shadow-md);
+  border-radius: 1.25rem;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.neu-raised-lg {
+  background: var(--bg);
+  box-shadow: var(--shadow-lg);
   border-radius: 1.5rem;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+/* Elevated hero / panel */
+.neu-elevated {
+  background: var(--bg);
+  box-shadow: var(--shadow-xl);
+  border-radius: 2rem;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Pressed / inset – input fields, selected states */
 .neu-pressed {
-  background: var(--bg-color);
-  box-shadow:
-    inset 6px 6px 12px var(--neumorph-dark),
-    inset -6px -6px 12px var(--neumorph-light);
-  border-radius: 1.5rem;
+  background: var(--bg);
+  box-shadow: var(--inset-md);
+  border-radius: 1.25rem;
+  transition: box-shadow 0.3s ease;
 }
 
-.neu-button {
-  background: var(--bg-color);
-  box-shadow:
-    5px 5px 10px var(--neumorph-dark),
-    -5px -5px 10px var(--neumorph-light);
+.neu-pressed-sm {
+  background: var(--bg);
+  box-shadow: var(--inset-sm);
   border-radius: 1rem;
-  transition: all 0.2s ease-in-out;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Deeply inset – wells, selected indicators */
+.neu-inset {
+  background: var(--bg-inset);
+  box-shadow: var(--inset-lg);
+  border-radius: 1.25rem;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Interactive buttons */
+.neu-button {
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
+  border-radius: 1rem;
+  transition: box-shadow 0.2s ease, transform 0.15s ease, color 0.2s ease;
   cursor: pointer;
 }
 
 .neu-button:hover {
-  box-shadow:
-    7px 7px 14px var(--neumorph-dark),
-    -7px -7px 14px var(--neumorph-light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .neu-button:active {
-  box-shadow:
-    inset 4px 4px 8px var(--neumorph-dark),
-    inset -4px -4px 8px var(--neumorph-light);
+  box-shadow: var(--inset-sm);
+  transform: translateY(0);
 }
 
-.neu-panel {
-  background: var(--bg-color);
-  box-shadow:
-    12px 12px 24px var(--neumorph-dark),
-    -12px -12px 24px var(--neumorph-light);
-  border-radius: 2rem;
+/* Flat surface – minimal shadow, for subtle separators */
+.neu-flat {
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
+  border-radius: 1.25rem;
+  transition: box-shadow 0.3s ease;
 }
 
+/* ── Accent Utilities ──────────────────────────────────────────────── */
 .text-accent {
   color: var(--accent);
 }
 
-.accent-glow {
-  box-shadow: 0 0 15px var(--accent-glow);
+.bg-accent-soft {
+  background: var(--accent-soft);
 }
 
-/* Base tailwind elements like backgrounds override our variables if applied, so removing main bg colors from jsx is needed */
+.accent-glow {
+  box-shadow: 0 0 20px var(--accent-glow), var(--shadow-md);
+}
+
+/* ── Neumorphic input ──────────────────────────────────────────────── */
+.neu-input {
+  background: var(--bg);
+  box-shadow: var(--inset-md);
+  border-radius: 1.25rem;
+  border: none;
+  outline: none;
+  color: var(--text);
+  transition: box-shadow 0.3s ease;
+}
+
+.neu-input::placeholder {
+  color: var(--text-muted);
+}
+
+.neu-input:focus {
+  box-shadow: var(--inset-md), 0 0 0 2px var(--accent-glow);
+}
+
+/* ── Dropdown ──────────────────────────────────────────────────────── */
+.neu-dropdown {
+  background: var(--bg);
+  box-shadow: var(--shadow-lg);
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+.neu-dropdown-item {
+  transition: background 0.15s ease;
+}
+
+.neu-dropdown-item:hover {
+  background: var(--accent-soft);
+}
+
+/* ── Forecast card selected ring ───────────────────────────────────── */
+.neu-card-selected {
+  box-shadow: var(--inset-md), 0 0 0 2px var(--accent);
+}
+
+/* ── Modal backdrop ────────────────────────────────────────────────── */
+.neu-backdrop {
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) .neu-backdrop {
+    background: rgba(0, 0, 0, 0.45);
+  }
+}
+
+:root.dark .neu-backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* ── Skeleton / loading ────────────────────────────────────────────── */
+.neu-skeleton {
+  background: linear-gradient(
+    110deg,
+    var(--bg) 0%,
+    var(--bg-inset) 40%,
+    var(--bg) 60%,
+    var(--bg) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
