@@ -23,7 +23,7 @@ for (const size of sizes) {
       width: size,
       height: size,
       channels: 4,
-      background: { r: 224, g: 229, b: 236, alpha: 1 },
+      background: { r: 13, g: 10, b: 26, alpha: 1 },
     },
   })
     .composite([
@@ -42,7 +42,7 @@ for (const size of sizes) {
       width: size,
       height: size,
       channels: 4,
-      background: { r: 42, g: 45, b: 53, alpha: 1 },
+      background: { r: 13, g: 10, b: 26, alpha: 1 },
     },
   })
     .composite([
