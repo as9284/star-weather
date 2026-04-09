@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ── Design Tokens ─────────────────────────────────────────────────── */
+/* ── Cosmic Dark-Purple Theme ──────────────────────────────────────── */
 :root {
   font-family:
     "Inter",
@@ -11,235 +11,135 @@
     Roboto,
     sans-serif;
 
-  /* Background – the canvas everything lives on */
-  --bg: #e0e5ec;
-  --bg-inset: #d5dae1;
+  --bg: #0d0a1a;
+  --bg-card: rgba(22, 16, 48, 0.65);
+  --bg-card-solid: #16102e;
+  --bg-card-hover: rgba(30, 22, 60, 0.8);
+  --border: rgba(139, 92, 246, 0.15);
+  --border-active: rgba(167, 139, 250, 0.4);
 
-  /* Text */
-  --text: #2d3436;
-  --text-muted: #6b7b8d;
+  --text: #e8e0ff;
+  --text-muted: rgba(196, 181, 253, 0.55);
 
-  /* Neumorphic light / dark layers (outer glow and shadow) */
-  --neu-light: rgba(255, 255, 255, 0.85);
-  --neu-dark: rgba(163, 177, 198, 0.6);
-
-  /* Accent */
-  --accent: #5e81ac;
-  --accent-glow: rgba(94, 129, 172, 0.35);
-  --accent-soft: rgba(94, 129, 172, 0.08);
-
-  /* Neumorphism shadow presets */
-  --shadow-sm: 3px 3px 6px var(--neu-dark), -3px -3px 6px var(--neu-light);
-  --shadow-md: 6px 6px 12px var(--neu-dark), -6px -6px 12px var(--neu-light);
-  --shadow-lg: 10px 10px 20px var(--neu-dark), -10px -10px 20px var(--neu-light);
-  --shadow-xl: 14px 14px 28px var(--neu-dark), -14px -14px 28px var(--neu-light);
-
-  --inset-sm: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
-  --inset-md: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
-  --inset-lg: inset 6px 6px 12px var(--neu-dark), inset -6px -6px 12px var(--neu-light);
-}
-
-/* ── System dark ───────────────────────────────────────────────────── */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --bg: #2a2d35;
-    --bg-inset: #24272e;
-    --text: #e4e6eb;
-    --text-muted: #8b92a5;
-    --neu-light: rgba(60, 65, 76, 0.5);
-    --neu-dark: rgba(16, 18, 22, 0.7);
-    --accent: #88c0d0;
-    --accent-glow: rgba(136, 192, 208, 0.35);
-    --accent-soft: rgba(136, 192, 208, 0.08);
-  }
-}
-
-/* ── Manual dark toggle ────────────────────────────────────────────── */
-:root.dark {
-  --bg: #2a2d35;
-  --bg-inset: #24272e;
-  --text: #e4e6eb;
-  --text-muted: #8b92a5;
-  --neu-light: rgba(60, 65, 76, 0.5);
-  --neu-dark: rgba(16, 18, 22, 0.7);
-  --accent: #88c0d0;
-  --accent-glow: rgba(136, 192, 208, 0.35);
-  --accent-soft: rgba(136, 192, 208, 0.08);
+  --accent: #a78bfa;
+  --accent-glow: rgba(139, 92, 246, 0.35);
 }
 
 /* ── Base ──────────────────────────────────────────────────────────── */
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
-  transition: background-color 0.4s ease, color 0.4s ease;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Neumorphic Primitives ─────────────────────────────────────────── */
-
-/* Raised surface – cards, panels */
-.neu-raised {
-  background: var(--bg);
-  box-shadow: var(--shadow-md);
-  border-radius: 1.25rem;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+/* ── Glass card ────────────────────────────────────────────────────── */
+.glass {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.25s ease, background 0.25s ease;
 }
 
-.neu-raised-lg {
-  background: var(--bg);
-  box-shadow: var(--shadow-lg);
+.glass:hover {
+  border-color: var(--border-active);
+  background: var(--bg-card-hover);
+}
+
+.glass-static {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Hero glass (elevated) ─────────────────────────────────────────── */
+.glass-hero {
+  background: rgba(22, 16, 48, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: 1.5rem;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 80px rgba(139, 92, 246, 0.06);
 }
 
-/* Elevated hero / panel */
-.neu-elevated {
-  background: var(--bg);
-  box-shadow: var(--shadow-xl);
-  border-radius: 2rem;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-/* Pressed / inset – input fields, selected states */
-.neu-pressed {
-  background: var(--bg);
-  box-shadow: var(--inset-md);
-  border-radius: 1.25rem;
-  transition: box-shadow 0.3s ease;
-}
-
-.neu-pressed-sm {
-  background: var(--bg);
-  box-shadow: var(--inset-sm);
-  border-radius: 1rem;
-  transition: box-shadow 0.3s ease;
-}
-
-/* Deeply inset – wells, selected indicators */
-.neu-inset {
-  background: var(--bg-inset);
-  box-shadow: var(--inset-lg);
-  border-radius: 1.25rem;
-  transition: box-shadow 0.3s ease;
-}
-
-/* Interactive buttons */
-.neu-button {
-  background: var(--bg);
-  box-shadow: var(--shadow-sm);
-  border-radius: 1rem;
-  transition: box-shadow 0.2s ease, transform 0.15s ease, color 0.2s ease;
-  cursor: pointer;
-}
-
-.neu-button:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-.neu-button:active {
-  box-shadow: var(--inset-sm);
-  transform: translateY(0);
-}
-
-/* Flat surface – minimal shadow, for subtle separators */
-.neu-flat {
-  background: var(--bg);
-  box-shadow: var(--shadow-sm);
-  border-radius: 1.25rem;
-  transition: box-shadow 0.3s ease;
-}
-
-/* ── Accent Utilities ──────────────────────────────────────────────── */
-.text-accent {
-  color: var(--accent);
-}
-
-.bg-accent-soft {
-  background: var(--accent-soft);
-}
-
-.accent-glow {
-  box-shadow: 0 0 20px var(--accent-glow), var(--shadow-md);
-}
-
-/* ── Neumorphic input ──────────────────────────────────────────────── */
-.neu-input {
-  background: var(--bg);
-  box-shadow: var(--inset-md);
-  border-radius: 1.25rem;
-  border: none;
-  outline: none;
+/* ── Input ─────────────────────────────────────────────────────────── */
+.cosmic-input {
+  background: rgba(15, 10, 35, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
   color: var(--text);
-  transition: box-shadow 0.3s ease;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.neu-input::placeholder {
+.cosmic-input::placeholder {
   color: var(--text-muted);
 }
 
-.neu-input:focus {
-  box-shadow: var(--inset-md), 0 0 0 2px var(--accent-glow);
+.cosmic-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ── Button ────────────────────────────────────────────────────────── */
+.cosmic-btn {
+  background: rgba(22, 16, 48, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.cosmic-btn:hover {
+  border-color: var(--border-active);
+  color: var(--accent);
+  background: rgba(30, 22, 60, 0.7);
+  transform: translateY(-1px);
+}
+
+.cosmic-btn:active {
+  transform: translateY(0);
 }
 
 /* ── Dropdown ──────────────────────────────────────────────────────── */
-.neu-dropdown {
-  background: var(--bg);
-  box-shadow: var(--shadow-lg);
-  border-radius: 1.25rem;
+.cosmic-dropdown {
+  background: rgba(18, 12, 42, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
 }
 
-.neu-dropdown-item {
+.cosmic-dropdown-item {
   transition: background 0.15s ease;
 }
 
-.neu-dropdown-item:hover {
-  background: var(--accent-soft);
+.cosmic-dropdown-item:hover {
+  background: rgba(139, 92, 246, 0.1);
 }
 
-/* ── Forecast card selected ring ───────────────────────────────────── */
-.neu-card-selected {
-  box-shadow: var(--inset-md), 0 0 0 2px var(--accent);
+/* ── Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* ── Modal backdrop ────────────────────────────────────────────────── */
-.neu-backdrop {
-  background: rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) .neu-backdrop {
-    background: rgba(0, 0, 0, 0.45);
-  }
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.25);
+  border-radius: 3px;
 }
 
-:root.dark .neu-backdrop {
-  background: rgba(0, 0, 0, 0.45);
-}
-
-/* ── Skeleton / loading ────────────────────────────────────────────── */
-.neu-skeleton {
-  background: linear-gradient(
-    110deg,
-    var(--bg) 0%,
-    var(--bg-inset) 40%,
-    var(--bg) 60%,
-    var(--bg) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.4);
 }

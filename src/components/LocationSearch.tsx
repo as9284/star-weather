@@ -70,7 +70,7 @@ export function LocationSearch({
     <div ref={wrapperRef} className="relative w-full">
       <div className="relative">
         {/* Search icon */}
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-(--text-muted) pointer-events-none">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-purple-400/50 pointer-events-none">
           <svg
             className="w-4 h-4"
             fill="none"
@@ -97,28 +97,28 @@ export function LocationSearch({
             }
           }}
           placeholder="Search for a city..."
-          className="w-full pl-10 pr-10 py-3.5 text-sm neu-input"
+          className="w-full pl-9 pr-9 py-2.5 text-sm cosmic-input"
         />
 
         {isSearching && isEditing && (
-          <div className="absolute right-4 top-1/2 -translate-y-1/2">
-            <div className="w-4 h-4 border-2 border-(--text-muted) border-opacity-30 border-t-(--accent) rounded-full animate-spin" />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            <div className="w-4 h-4 border-2 border-purple-500/20 border-t-purple-400 rounded-full animate-spin" />
           </div>
         )}
       </div>
 
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 mt-3 neu-dropdown z-50 py-1">
+        <div className="absolute top-full left-0 right-0 mt-2 cosmic-dropdown z-50 py-1">
           {results!.map((location) => (
             <button
               key={location.id}
               onClick={() => handleSelect(location)}
-              className="w-full px-5 py-3 text-left neu-dropdown-item flex flex-col focus:outline-none"
+              className="w-full px-4 py-2.5 text-left cosmic-dropdown-item flex flex-col focus:outline-none"
             >
-              <span className="font-semibold text-(--text) text-sm">
+              <span className="font-semibold text-purple-100 text-sm">
                 {location.name}
               </span>
-              <span className="text-xs text-(--text-muted) mt-0.5">
+              <span className="text-xs text-purple-300/40 mt-0.5">
                 {location.admin1 && `${location.admin1}, `}
                 {location.country}
               </span>

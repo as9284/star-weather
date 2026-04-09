@@ -19,9 +19,9 @@ export default defineConfig({
         name: "Star Weather",
         short_name: "StarWeather",
         description:
-          "A beautiful neumorphic weather app powered by Open-Meteo",
-        theme_color: "#e0e5ec",
-        background_color: "#e0e5ec",
+          "A cosmic weather app powered by Open-Meteo",
+        theme_color: "#0d0a1a",
+        background_color: "#0d0a1a",
         display: "standalone",
         orientation: "any",
         start_url: "/",
