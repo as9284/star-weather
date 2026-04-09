@@ -33,7 +33,12 @@ export function StarBackground() {
       phase: number;
     }
 
-    const STAR_COUNT = Math.min(Math.floor((width * height) / 3000), 400);
+    const PIXELS_PER_STAR = 3000;
+    const MAX_STARS = 400;
+    const STAR_COUNT = Math.min(
+      Math.floor((width * height) / PIXELS_PER_STAR),
+      MAX_STARS,
+    );
 
     const stars: Star[] = Array.from({ length: STAR_COUNT }, () => ({
       x: Math.random() * width,
@@ -71,14 +76,15 @@ export function StarBackground() {
       });
     };
 
-    let shootTimer = 0;
-    const SHOOT_INTERVAL = 180; // frames between spawns (~3 s at 60 fps)
+    const SHOOT_INTERVAL_MS = 3000; // ms between shooting star spawns
+    let lastShootTime = performance.now();
 
     /* ── Render loop ─────────────────────────────────────────── */
     let frame = 0;
 
     const draw = () => {
       frame++;
+      const now = performance.now();
       ctx.clearRect(0, 0, width, height);
 
       // Stars
@@ -91,10 +97,9 @@ export function StarBackground() {
         ctx.fill();
       }
 
-      // Shooting stars
-      shootTimer++;
-      if (shootTimer >= SHOOT_INTERVAL) {
-        shootTimer = 0;
+      // Shooting stars (timestamp-based for consistent rate across frame rates)
+      if (now - lastShootTime >= SHOOT_INTERVAL_MS) {
+        lastShootTime = now;
         spawnShooter();
       }
 

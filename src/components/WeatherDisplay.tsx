@@ -226,7 +226,11 @@ export function WeatherDisplay({ data, location }: WeatherDisplayProps) {
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                           <DetailTile
                             label="UV Index"
-                            value={`${daily.uv_index_max?.[index]?.toFixed(1) ?? "--"}`}
+                            value={
+                              daily.uv_index_max?.[index] !== undefined
+                                ? daily.uv_index_max[index].toFixed(1)
+                                : "--"
+                            }
                           />
                           <DetailTile
                             label="Sunrise"
